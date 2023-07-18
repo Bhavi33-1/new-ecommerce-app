@@ -29,26 +29,26 @@ class Product extends Equatable {
   ];
 
   static List<Product> products = [
-    Product(
+    const Product(
         name: 'Milk',
         category: 'Milk',
-        imageUrl: 'http://ninjacowfarm.com/wp-content/uploads/2015/10/bottle-and-glass-of-milk.jpg',
+        imageUrl: ('http://ninjacowfarm.com/wp-content/uploads/2015/10/bottle-and-glass-of-milk.jpg'),
         price: 5000,
         isPopular: true,
         isRecommended: true,
     ),
-    Product(
+    const Product(
       name: 'Soap1',
-      category: 'Soap',
-      imageUrl: 'https://www.beautyaz.gr/17570-thickbox_default/donkey-milk-gold-soap-90g.jpg',
+      category: 'Soaps',
+      imageUrl: ('https://www.beautyaz.gr/17570-thickbox_default/donkey-milk-gold-soap-90g.jpg'),
       price: 1000,
       isPopular: false,
       isRecommended: true,
     ),
-    Product(
+    const Product(
       name: 'Soap2',
-      category: 'Soap',
-      imageUrl: 'https://www.beautyaz.gr/17570-thickbox_default/donkey-milk-gold-soap-90g.jpg',
+      category: 'Soaps',
+      imageUrl: ('https://www.beautyaz.gr/17570-thickbox_default/donkey-milk-gold-soap-90g.jpg'),
       price: 2000,
       isPopular: false,
       isRecommended: true,

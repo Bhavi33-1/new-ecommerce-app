@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:newapp/models/category_model.dart';
+import '../models/product_model.dart';
 
 class HeroCarouselCard extends StatelessWidget {
-  final Category category;
+  final Category? category;
+  final Product? product;
 
   const HeroCarouselCard({
-    required this.category,
+     this.category,
+    this.product,
   });
 
   // const HeroCarouselCard({Key? key}) : super(key: key);
@@ -15,11 +18,13 @@ class HeroCarouselCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
+        if (this.product == null ) {
+          Navigator.pushNamed(
             context,
             '/catalog',
             arguments: category,
-        );
+          );
+        }
       },
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -30,7 +35,12 @@ class HeroCarouselCard extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
             child: Stack(
               children: <Widget>[
-                Image.network(category.imageUrl, fit: BoxFit.cover, width: 1000.0),
+                Image.network(
+                  product == null ? category!.imageUrl : product!.imageUrl,
+
+                    fit: BoxFit.cover,
+                    width: 1000.0
+                ),
                 Positioned(
                   bottom: 0.0,
                   left: 0.0,
@@ -49,7 +59,7 @@ class HeroCarouselCard extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 20.0),
                     child: Text(
-                        category.name,
+                        product == null ? category!.name : '',
                         style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.white)
                     ),
                   ),

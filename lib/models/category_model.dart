@@ -14,15 +14,13 @@ class Category extends Equatable {
   List<Object?> get props => [name, imageUrl];
 
   static List<Category> categories = [
-    Category(
+    const Category(
         name: 'Milk',
-        imageUrl:
-              'http://ninjacowfarm.com/wp-content/uploads/2015/10/bottle-and-glass-of-milk.jpg',
+        imageUrl: ('http://ninjacowfarm.com/wp-content/uploads/2015/10/bottle-and-glass-of-milk.jpg'),
     ),
-    Category(
+    const Category(
         name: 'Soaps',
-        imageUrl:
-              'https://www.beautyaz.gr/17570-thickbox_default/donkey-milk-gold-soap-90g.jpg',
+        imageUrl: ('https://www.beautyaz.gr/17570-thickbox_default/donkey-milk-gold-soap-90g.jpg'),
     ),
   ];
 

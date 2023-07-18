@@ -1,8 +1,8 @@
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:newapp/screens/cart/cart_screen.dart';
-import 'package:newapp/screens/home/home_screen.dart';
-import 'package:newapp/screens/product/product_screen.dart';
+// import 'package:newapp/screens/cart/cart_screen.dart';
+// import 'package:newapp/screens/home/home_screen.dart';
+// import 'package:newapp/screens/product/product_screen.dart';
 import 'package:newapp/screens/screens.dart';
 import 'package:newapp/models/modals.dart';
 
@@ -18,7 +18,7 @@ class AppRouter {
       case CartScreen.routeName:
         return CartScreen.route();
       case ProductScreen.routeName:
-        return ProductScreen.route();
+        return ProductScreen.route(product: settings.arguments as Product);
       case WishlistScreen.routeName:
         return WishlistScreen.route();
       case CatalogScreen.routeName:
