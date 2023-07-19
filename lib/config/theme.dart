@@ -34,8 +34,8 @@ TextTheme textTheme() {
     ),
     headlineSmall: TextStyle(
       color: Colors.black,
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
     ),
     titleLarge: TextStyle(
       color: Colors.black,

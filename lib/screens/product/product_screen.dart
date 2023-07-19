@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newapp/blocs/wishlist/wishlist_bloc.dart';
 import 'package:newapp/models/modals.dart';
 import 'package:newapp/widgets/widgets.dart';
 import 'package:newapp/models/product_model.dart';
@@ -23,7 +25,40 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: product.name),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: Container(
+          height: 70,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+            IconButton(
+                icon: Icon(Icons.share, color: Colors.white),
+                onPressed: () {}),
+            BlocBuilder<WishlistBloc, WishlistState>(
+              builder: (context, state) {
+                return IconButton(
+                    icon: Icon(Icons.favorite,
+                        color: Colors.white), onPressed: () {
+                      context
+                          .read<WishlistBloc>()
+                          .add(AddWishlistProduct(product));
+
+                      final snackBar =
+                      SnackBar(content: Text('Item added to Wishlist!'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                });
+              },
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                onPressed: () {},
+                child: Text('ADD To CART',
+                    style: Theme.of(context).textTheme.displaySmall!),
+            )
+          ],),
+        ),
+      ),
       body: ListView(
        children: [CarouselSlider(
         options: CarouselOptions(

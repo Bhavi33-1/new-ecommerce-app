@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'blocs/wishlist/wishlist_bloc.dart';
 import 'screens/home/home_screen.dart';
 import 'package:newapp/config/app_router.dart';
 import 'package:newapp/config/theme.dart';
@@ -10,24 +12,24 @@ void main() => runApp(create());
   // home: HomeScreen(),
 // ));
 
-// // import 'package:flutter/material.dart';
-// import 'package:newapp/config/app_router.dart';
-// import 'package:newapp/config/theme.dart';
-// import 'package:newapp/screens/screens.dart';
-// import 'screens/home/home_screen.dart';
-
 
 class create extends StatelessWidget {
   // const create({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => WishlistBloc()..add(StartWishlist())),
+      ],
+    child: MaterialApp(
       title: 'Bhavs Created App',
+      debugShowCheckedModeBanner: false,
       theme: theme(),
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: HomeScreen.routeName,
       home: HomeScreen(),
+    ),
     );
   }
 }
