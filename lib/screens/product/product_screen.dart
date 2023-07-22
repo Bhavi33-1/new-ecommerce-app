@@ -1,10 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newapp/blocs/cart/cart_event.dart';
 import 'package:newapp/blocs/wishlist/wishlist_bloc.dart';
 import 'package:newapp/models/modals.dart';
 import 'package:newapp/widgets/widgets.dart';
 import 'package:newapp/models/product_model.dart';
+
+import '../../blocs/cart/cart_bloc.dart';
+import '../../blocs/cart/cart_state.dart';
 
 class ProductScreen extends StatelessWidget {
   // const ProductScreen({Key? key}) : super(key: key);
@@ -50,11 +54,18 @@ class ProductScreen extends StatelessWidget {
                 });
               },
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                onPressed: () {},
-                child: Text('ADD To CART',
-                    style: Theme.of(context).textTheme.displaySmall!),
+            BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                    onPressed: () {
+                      context.read<CartBloc>().add(CartProductAdded(product));
+                      Navigator.pushNamed(context, '/cart');
+                    },
+                    child: Text('ADD To CART',
+                        style: Theme.of(context).textTheme.displaySmall!),
+                );
+              }
             )
           ],),
         ),

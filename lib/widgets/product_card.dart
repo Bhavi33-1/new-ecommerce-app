@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newapp/blocs/cart/cart_event.dart';
 import 'package:newapp/models/modals.dart';
+
+import '../blocs/cart/cart_bloc.dart';
+import '../blocs/cart/cart_state.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -45,7 +50,7 @@ class ProductCard extends StatelessWidget {
               height: 0,
               alignment: Alignment.bottomCenter,
               decoration: BoxDecoration(
-                color: Colors.black.withAlpha(50),
+                color: Colors.black,
               ),
             ),
           ),
@@ -56,7 +61,7 @@ class ProductCard extends StatelessWidget {
               height: 70,
               alignment: Alignment.bottomCenter,
               decoration: BoxDecoration(
-                  color: Colors.black
+                  color: Colors.grey.shade600,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -84,15 +89,33 @@ class ProductCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: IconButton(
+                    BlocBuilder<CartBloc, CartState>(
+                    builder: (context, state) {
+                      if(state is CartLoading) {
+                        return Center(
+                        child: CircularProgressIndicator(),
+                        );
+                    }
+                    if(state is CartLoaded) {
+                        return Expanded(
+                        child: IconButton(
                         icon: Icon(
-                            Icons.add_circle,
-                            color: Colors.white
+                        Icons.add_circle,
+                        color: Colors.white
                         ),
-                        onPressed: () {},
-                      ),
-                    ),
+                        onPressed: () {
+                          context
+                              .read<CartBloc>()
+                              .add(CartProductAdded(product));
+                        },
+                        ),
+                        );
+                        } else {
+                      return Text('Something went wrong');
+                    }
+                    },
+                   ),
+
                     isWishlist
                          ? Expanded(
                       child: IconButton(

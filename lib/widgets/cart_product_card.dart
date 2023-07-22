@@ -1,13 +1,20 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newapp/blocs/cart/cart_state.dart';
+import '../blocs/cart/cart_bloc.dart';
+import '../blocs/cart/cart_event.dart';
 import '../models/product_model.dart';
 
 class CartProductCard extends StatelessWidget {
-  final Product product;
   const CartProductCard({
     Key? key,
     required this.product,
+    required this.quantity,
   }) : super(key: key);
+
+  final Product product;
+  final int quantity;
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +45,47 @@ class CartProductCard extends StatelessWidget {
             ),
           ),
           SizedBox(width: 10),
-          Row(children: [
-            IconButton(icon: Icon(Icons.remove_circle), onPressed: () {}),
-            Text(
-              '1',
-              style: Theme.of(context).textTheme.headlineSmall,),
-            IconButton(icon: Icon(Icons.add_circle), onPressed: () {}),
-          ],)
+          BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                if (state is CartLoading) {
+                  return CircularProgressIndicator();
+                }
+                if (state is CartLoaded) {
+                  return Row(
+                    children: [
+                      IconButton(icon: Icon(Icons.remove_circle),
+                        onPressed: () {
+                          context.read<CartBloc>().add(
+                            CartProductRemoved(product),
+                          );
+                        },
+                      ),
+                      Text(
+                        '$quantity',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headlineMedium,
+                      ),
+                      // Text(
+                      //   '$quantity',
+                      //   style: Theme
+                      //       .of(context)
+                      //       .textTheme
+                      //       .headlineSmall,
+                      // ),
+                      IconButton(icon: Icon(Icons.add_circle), onPressed: () {
+                        context
+                            .read<CartBloc>()
+                            .add(CartProductAdded(product));
+                        },
+                      ),
+                    ],
+                  );
+                }
+                return Text('Something went wrong');
+              },
+          ),
         ],
       ),
     );
