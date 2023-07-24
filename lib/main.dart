@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newapp/blocs/cart/cart_bloc.dart';
 import 'package:newapp/blocs/cart/cart_event.dart';
+import 'package:newapp/blocs/category/category_bloc.dart';
+import 'package:newapp/blocs/category/category_event.dart';
+import 'package:newapp/blocs/product/product_bloc.dart';
+import 'package:newapp/blocs/product/product_event.dart';
+import 'package:newapp/repositories/category/category_repository.dart';
+import 'package:newapp/repositories/product/product_repository.dart';
 
 import 'blocs/wishlist/wishlist_bloc.dart';
 import 'screens/home/home_screen.dart';
@@ -56,6 +62,16 @@ class create extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => WishlistBloc()..add(StartWishlist())),
         BlocProvider(create: (_) => CartBloc()..add(CartStarted())),
+        BlocProvider(
+            create: (_) => CategoryBloc(
+                categoryRepository: CategoryRepository(),
+            )..add(LoadCategories()),
+        ),
+        // BlocProvider(
+        //   create: (_) => ProductBloc(
+        //     productRepository: ProductRepository(),
+        //   )..add(LoadProducts()),
+        // ),
       ],
     child: MaterialApp(
       title: 'Bhavs Created App',
@@ -70,83 +86,6 @@ class create extends StatelessWidget {
   }
 }
 
-// class HomeScreen extends StatelessWidget {
-//   const HomeScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: CustomAppBar(title: 'Bhavs Created App'),
-//       bottomNavigationBar: CustomNavBar(),
-//     );
-//   }
-// }
 
-// class CustomNavBar extends StatelessWidget {
-//   const CustomNavBar({
-//     super.key,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return BottomAppBar(
-//       color: Colors.black,
-//       child: Container(
-//         height: 70,
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//           children: [
-//           IconButton(
-//               icon: Icon(Icons.home, color: Colors.white),
-//               onPressed: () {
-//             Navigator.pushNamed(context, '/');
-//           }), IconButton(
-//               icon: Icon(Icons.shopping_cart, color: Colors.white),
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/cart');
-//               }), IconButton(
-//               icon: Icon(Icons.person, color: Colors.white),
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/user');
-//               })
-//         ],),
-//       ),
-//     );
-//   }
-// }
-
-// class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
-//   const CustomAppBar({
-//     super.key,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return AppBar(
-//       backgroundColor: Colors.indigo,
-//       elevation: 0,
-//       title: Container(
-//         color: Colors.white,
-//         // padding: const EdgeInsets.symmetric(
-//         //   horizontal: 20,
-//         //   vertical: 10,
-//         // ),
-//         child: Text('Bhavs Created App',
-//           style: TextStyle(
-//               color: Colors.black,
-//               fontSize: 24,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//       ),
-//       iconTheme: IconThemeData(color: Colors.white),
-//       actions: [IconButton(onPressed: () {}, icon: Icon(Icons.favorite))],
-//     );
-//   }
-//
-//   @override
-//   // TODO: implement preferredSize
-//   Size get preferredSize => Size.fromHeight(50.0);
-// }
 
 
